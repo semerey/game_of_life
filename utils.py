@@ -1,21 +1,20 @@
 # read input
-file_test = "C:\\Users\\Anna\\PycharmProjects\\game_of_life\\input_data.txt"
-
+import copy
+file_test = "..\\game_of_life\\input_data.txt"
 
 def read_file(file_path):
     with open(file_path) as f:
         n_generations = f.readline().strip()
+        n_generations = int(n_generations)
         width, height = f.readline().strip().split()
         table = f.read().splitlines()
-        for i in table:
-            i = list(i)
-            print(i)
-
+        for i in range(len(table)):
+            table[i] = list(table[i])
     return n_generations, width, height, table
 n_generations, width, height, table = read_file(file_test)
 
 # j - cols, i - rows
-def return_next(table, row, col):
+def next_cell(table, row, col):
     c = 0
     cond = table[row][col]
     for i in range(-1, 2):
@@ -31,5 +30,19 @@ def return_next(table, row, col):
         cond = "."
 
     return cond
+def next_generation(table):
+    copied_table = copy.deepcopy(table)
+    for i in range(len(table)):
+        for j in range(len(table[0])):
+            copied_table[i][j] = next_cell(table,i,j)
 
+    return copied_table
 
+def gen_generation(table,n_generations):
+    for i in range(n_generations):
+        table = next_generation(table)
+
+    return table
+result = gen_generation(table,n_generations)
+for i in result:
+    print("".join(i))
