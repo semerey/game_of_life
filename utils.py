@@ -1,6 +1,5 @@
-# read input
 import copy
-file_test = "..\\game_of_life\\input_data.txt"
+
 
 def read_file(file_path):
     with open(file_path) as f:
@@ -11,7 +10,7 @@ def read_file(file_path):
         for i in range(len(table)):
             table[i] = list(table[i])
     return n_generations, width, height, table
-n_generations, width, height, table = read_file(file_test)
+
 
 # j - cols, i - rows
 def next_cell(table, row, col):
@@ -30,6 +29,8 @@ def next_cell(table, row, col):
         cond = "."
 
     return cond
+
+
 def next_generation(table):
     copied_table = copy.deepcopy(table)
     for i in range(len(table)):
@@ -38,11 +39,14 @@ def next_generation(table):
 
     return copied_table
 
+
 def gen_generation(table,n_generations):
     for i in range(n_generations):
         table = next_generation(table)
 
     return table
-result = gen_generation(table,n_generations)
-for i in result:
-    print("".join(i))
+
+
+def print_result(table):
+    for i in table:
+        print("".join(i))
